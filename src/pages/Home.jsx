@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { AnimatePresence } from 'framer-motion';
-import { Search, ChevronRight, ArrowRight } from 'lucide-react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Search, ChevronRight, ArrowRight, Menu, X } from 'lucide-react';
 import ChatButton from '@/components/chat/ChatButton';
 import ChatWindow from '@/components/chat/ChatWindow';
 
