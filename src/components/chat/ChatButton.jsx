@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { MessageCircle, X } from 'lucide-react';
 
-const BARRY_AVATAR = "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69a899204895a2076449c374/ea56736be_generated_image.png";
+const BARRY_AVATAR = "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69a899204895a2076449c374/6dad36f12_BarryAIProfile.png";
 
 export default function ChatButton({ isOpen, onClick }) {
     return (
