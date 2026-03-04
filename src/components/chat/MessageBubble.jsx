@@ -16,19 +16,19 @@ export default function MessageBubble({ message, barryAvatar }) {
                     />
                 </div>
             )}
-            <div className={cn("max-w-[80%]", isUser && "flex flex-col items-end")}>
+            <div className={cn("max-w-[80%] min-w-0", isUser && "flex flex-col items-end")}>
                 {message.content && (
                     <div className={cn(
-                        "rounded-2xl px-4 py-2.5 shadow-sm",
+                        "rounded-2xl px-4 py-2.5 shadow-sm break-words overflow-hidden",
                         isUser 
                             ? "bg-[#094183] text-white rounded-br-md" 
                             : "bg-white border border-gray-100 text-gray-800 rounded-bl-md"
                     )}>
                         {isUser ? (
-                            <p className="text-sm leading-relaxed">{message.content}</p>
+                            <p className="text-sm leading-relaxed break-words">{message.content}</p>
                         ) : (
                             <ReactMarkdown 
-                                className="text-sm prose prose-sm max-w-none [&>*:first-child]:mt-0 [&>*:last-child]:mb-0"
+                                className="text-sm prose prose-sm max-w-none [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 break-words"
                                 components={{
                                     p: ({ children }) => <p className="my-1 leading-relaxed">{children}</p>,
                                     a: ({ children, ...props }) => (
