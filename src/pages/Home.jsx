@@ -143,7 +143,7 @@ export default function Home() {
                         </a>
                         <button onClick={() => setIsChatOpen(true)}
                             className="bg-white/20 hover:bg-white/30 border border-white/40 px-5 py-2.5 text-sm font-semibold transition-colors flex items-center gap-2">
-                            💬 Chat with BarryAI
+                            Chat with BarryAI
                         </button>
                     </div>
                 </div>
