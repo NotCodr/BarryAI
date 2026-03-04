@@ -6,7 +6,7 @@ import { X, Send, Sparkles, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import MessageBubble from './MessageBubble';
 
-const BARRY_AVATAR = "https://images.unsplash.com/photo-1614680376593-902f74cf0d41?w=200&h=200&fit=crop&crop=face";
+const BARRY_AVATAR = "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69a899204895a2076449c374/ea56736be_generated_image.png";
 
 const QUICK_PROMPTS = [
     "Where are the libraries?",
