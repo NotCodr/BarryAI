@@ -165,14 +165,18 @@ export default function ChatWindow({ isOpen, onClose }) {
 
                         {isSending &&
           <div className="flex gap-3 items-start">
-                                <div className="h-8 w-8 rounded-full overflow-hidden flex-shrink-0 shadow border border-white">
+                                <div className="h-8 w-8 rounded-full overflow-hidden flex-shrink-0 shadow border border-white relative">
                                     <img src={BARRY_AVATAR} alt="Barry" className="h-full w-full object-cover" />
+                                    <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-[#003087] animate-spin"></div>
                                 </div>
                                 <div className="bg-white border border-gray-100 rounded-2xl rounded-bl-md px-4 py-3 shadow-sm">
-                                    <div className="flex gap-1.5">
-                                        <div className="w-2 h-2 bg-[#003087] rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                                        <div className="w-2 h-2 bg-[#003087] rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                                        <div className="w-2 h-2 bg-[#003087] rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                                    <div className="flex items-center gap-2">
+                                        <span className="text-xs text-gray-500 italic">Just a moment</span>
+                                        <div className="flex gap-1">
+                                            <div className="w-1.5 h-1.5 bg-[#003087] rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                                            <div className="w-1.5 h-1.5 bg-[#003087] rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                                            <div className="w-1.5 h-1.5 bg-[#003087] rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
