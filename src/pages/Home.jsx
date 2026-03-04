@@ -13,7 +13,7 @@ export default function Home() {
         <div className="min-h-screen bg-white font-sans">
 
             {/* Top utility bar */}
-            <div className="bg-[#003087] text-white">
+            <div className="bg-[#003087] text-white hidden sm:block">
                 <div className="max-w-7xl mx-auto px-4 flex justify-end">
                     <div className="flex text-[11px] divide-x divide-white/20">
                         {['Students', 'Library', 'Staff', 'Alumni', 'Giving', 'Contact'].map(item => (
@@ -47,29 +47,29 @@ export default function Home() {
             </nav>
 
             {/* Hero Banner */}
-            <div className="relative h-[480px] md:h-[560px] overflow-hidden">
+            <div className="relative h-[360px] sm:h-[480px] md:h-[560px] overflow-hidden">
                 <img
                     src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=1600&q=80"
                     alt="University of Melbourne campus"
                     className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-[#003087]/80 via-[#003087]/50 to-transparent" />
-                <div className="absolute inset-0 flex items-center">
-                    <div className="max-w-7xl mx-auto px-6 md:px-10">
+                <div className="absolute inset-0 bg-gradient-to-b sm:bg-gradient-to-r from-[#003087]/90 via-[#003087]/60 to-transparent" />
+                <div className="absolute inset-0 flex items-end sm:items-center pb-8 sm:pb-0">
+                    <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-10 w-full">
                         <div className="max-w-lg">
-                            <h1 className="text-4xl md:text-5xl font-bold text-white leading-tight mb-4">
+                            <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold text-white leading-tight mb-3 sm:mb-4">
                                 Welcome to the University of Melbourne
                             </h1>
-                            <p className="text-white/90 text-lg mb-8">
+                            <p className="text-white/90 text-sm sm:text-lg mb-5 sm:mb-8 hidden sm:block">
                                 Australia's leading university — shaping the next generation of thinkers, leaders and innovators.
                             </p>
-                            <div className="flex flex-wrap gap-3">
+                            <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
                                 <a href="https://study.unimelb.edu.au" target="_blank" rel="noreferrer"
-                                    className="bg-[#00B2A9] hover:bg-[#009990] text-white px-6 py-3 text-sm font-semibold flex items-center gap-2 transition-colors">
+                                    className="bg-[#00B2A9] hover:bg-[#009990] text-white px-5 py-2.5 sm:px-6 sm:py-3 text-sm font-semibold flex items-center justify-center gap-2 transition-colors">
                                     Explore Courses <ArrowRight className="h-4 w-4" />
                                 </a>
                                 <a href="https://study.unimelb.edu.au/discover/virtual-tour" target="_blank" rel="noreferrer"
-                                    className="bg-white/20 hover:bg-white/30 border border-white/50 text-white px-6 py-3 text-sm font-semibold flex items-center gap-2 transition-colors">
+                                    className="bg-white/20 hover:bg-white/30 border border-white/50 text-white px-5 py-2.5 sm:px-6 sm:py-3 text-sm font-semibold flex items-center justify-center gap-2 transition-colors">
                                     Virtual Campus Tour
                                 </a>
                             </div>
@@ -80,8 +80,8 @@ export default function Home() {
 
             {/* Quick Links */}
             <div className="bg-white border-b border-gray-200">
-                <div className="max-w-7xl mx-auto px-6">
-                    <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-gray-200">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6">
+                    <div className="grid grid-cols-2 md:grid-cols-4 divide-y sm:divide-y-0 divide-x divide-gray-200">
                         {[
                             { title: 'Courses', desc: 'Find the right course and see why studying with us is different.', href: 'https://study.unimelb.edu.au' },
                             { title: 'Research', desc: "Find out how we're making a difference.", href: 'https://research.unimelb.edu.au' },
@@ -89,13 +89,13 @@ export default function Home() {
                             { title: 'Events', desc: 'Connect with our community, in person and online.', href: 'https://events.unimelb.edu.au' },
                         ].map(item => (
                             <a key={item.title} href={item.href} target="_blank" rel="noreferrer"
-                                className="group flex items-start justify-between px-6 py-6 hover:bg-gray-50 transition-colors">
+                                className="group flex items-start justify-between px-4 sm:px-6 py-4 sm:py-6 hover:bg-gray-50 transition-colors">
                                 <div>
                                     <h3 className="font-semibold text-gray-900 text-sm mb-1">{item.title}</h3>
                                     <p className="text-xs text-gray-500 leading-snug hidden md:block">{item.desc}</p>
                                 </div>
-                                <div className="h-8 w-8 rounded-full bg-[#003087] flex items-center justify-center flex-shrink-0 ml-2 mt-0.5 group-hover:bg-[#00B2A9] transition-colors">
-                                    <ArrowRight className="h-4 w-4 text-white" />
+                                <div className="h-7 w-7 sm:h-8 sm:w-8 rounded-full bg-[#003087] flex items-center justify-center flex-shrink-0 ml-2 mt-0.5 group-hover:bg-[#00B2A9] transition-colors">
+                                    <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-white" />
                                 </div>
                             </a>
                         ))}
@@ -104,9 +104,9 @@ export default function Home() {
             </div>
 
             {/* Student Resources Grid */}
-            <div className="max-w-7xl mx-auto px-6 py-14">
-                <h2 className="text-2xl font-bold text-[#003087] mb-8">Student Resources</h2>
-                <div className="grid md:grid-cols-3 gap-6">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-14">
+                <h2 className="text-xl sm:text-2xl font-bold text-[#003087] mb-5 sm:mb-8">Student Resources</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
                     {[
                         { title: 'New Students', desc: 'Orientation, enrolment guides, and everything you need to get started at UoM.', img: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&q=80', href: 'https://students.unimelb.edu.au' },
                         { title: 'Current Students', desc: 'Access the student portal, LMS, class timetables, and academic support.', img: 'https://images.unsplash.com/photo-1519452635265-7b1fbfd1e4e0?w=600&q=80', href: 'https://my.unimelb.edu.au' },
@@ -131,18 +131,18 @@ export default function Home() {
 
             {/* Need Help Strip */}
             <div className="bg-[#003087] text-white">
-                <div className="max-w-7xl mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-4">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8 flex flex-col items-start sm:flex-row sm:items-center justify-between gap-4">
                     <div>
-                        <h3 className="text-xl font-bold mb-1">Need Help?</h3>
+                        <h3 className="text-lg sm:text-xl font-bold mb-1">Need Help?</h3>
                         <p className="text-white/80 text-sm">Stop 1 can answer your questions and connect you with student services.</p>
                     </div>
-                    <div className="flex flex-wrap gap-3">
+                    <div className="flex flex-col sm:flex-row w-full sm:w-auto gap-2 sm:gap-3">
                         <a href="https://students.unimelb.edu.au/support-and-wellbeing/stop-1" target="_blank" rel="noreferrer"
-                            className="bg-[#00B2A9] hover:bg-[#009990] px-5 py-2.5 text-sm font-semibold transition-colors">
+                            className="bg-[#00B2A9] hover:bg-[#009990] px-5 py-2.5 text-sm font-semibold transition-colors text-center">
                             Contact Stop 1
                         </a>
                         <button onClick={() => setIsChatOpen(true)}
-                            className="bg-white/20 hover:bg-white/30 border border-white/40 px-5 py-2.5 text-sm font-semibold transition-colors flex items-center gap-2">
+                            className="bg-white/20 hover:bg-white/30 border border-white/40 px-5 py-2.5 text-sm font-semibold transition-colors text-center">
                             Chat with BarryAI
                         </button>
                     </div>
@@ -150,16 +150,16 @@ export default function Home() {
             </div>
 
             {/* News */}
-            <div className="max-w-7xl mx-auto px-6 py-14">
-                <h2 className="text-2xl font-bold text-[#003087] mb-8">News &amp; Events</h2>
-                <div className="grid md:grid-cols-2 gap-6">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-14">
+                <h2 className="text-xl sm:text-2xl font-bold text-[#003087] mb-5 sm:mb-8">News &amp; Events</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                     {[
                         { tag: 'Newsroom', title: 'Seventh cohort of Hansen Scholars joins the University of Melbourne', img: 'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=600&q=80', href: 'https://www.unimelb.edu.au/newsroom' },
                         { tag: 'Pursuit', title: 'How Indigenous business enterprise is rewriting Australian economics', img: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&q=80', href: 'https://pursuit.unimelb.edu.au' },
                     ].map(item => (
                         <a key={item.title} href={item.href} target="_blank" rel="noreferrer"
-                            className="group flex gap-4 border border-gray-200 hover:shadow-md transition-shadow p-4">
-                            <img src={item.img} alt={item.title} className="w-28 h-28 object-cover flex-shrink-0" />
+                            className="group flex gap-3 sm:gap-4 border border-gray-200 hover:shadow-md transition-shadow p-3 sm:p-4">
+                            <img src={item.img} alt={item.title} className="w-20 h-20 sm:w-28 sm:h-28 object-cover flex-shrink-0" />
                             <div>
                                 <span className="text-[10px] font-bold text-[#00B2A9] uppercase tracking-wider">{item.tag}</span>
                                 <h4 className="text-sm font-semibold text-gray-900 mt-1 leading-snug group-hover:text-[#003087] transition-colors">{item.title}</h4>
@@ -171,8 +171,8 @@ export default function Home() {
             </div>
 
             {/* Footer */}
-            <footer className="bg-[#002060] text-white py-10">
-                <div className="max-w-7xl mx-auto px-6">
+            <footer className="bg-[#002060] text-white py-8 sm:py-10">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6">
                     <div className="flex flex-col md:flex-row justify-between gap-6 mb-8">
                         <div>
                             <div className="text-[9px] tracking-widest uppercase text-white/60 mb-0.5">The University of</div>
