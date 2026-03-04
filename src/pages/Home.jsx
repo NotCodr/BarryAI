@@ -8,6 +8,7 @@ const UOM_LOGO = "https://www.unimelb.edu.au/__data/assets/image/0007/3843821/UO
 
 export default function Home() {
     const [isChatOpen, setIsChatOpen] = useState(false);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     return (
         <div className="min-h-screen bg-white font-sans">
