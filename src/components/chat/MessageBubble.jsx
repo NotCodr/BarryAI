@@ -15,8 +15,8 @@ function splitContentAndDisclaimers(content) {
         if (
             trimmed.match(/^please note:/i) ||
             trimmed.match(/^note:/i) ||
-            trimmed.match(/operates independently of the university of melbourne/i) ||
-            trimmed.match(/operates independently of unimelb/i)
+            trimmed.match(/operates independently (of|to) the university of melbourne/i) ||
+            trimmed.match(/operates independently (of|to) unimelb/i)
         ) {
             disclaimerLines.push(trimmed);
         } else {
@@ -83,6 +83,7 @@ export default function MessageBubble({ message, barryAvatar }) {
                         {disclaimers.map((d, i) => (
                             <p key={i} className="text-[10px] text-gray-400 leading-snug">{d}</p>
                         ))}
+                        <p className="text-[10px] text-gray-400 leading-snug">UoM does not guarantee the safety of any external redirects.</p>
                     </div>
                 )}
             </div>
