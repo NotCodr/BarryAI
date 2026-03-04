@@ -12,7 +12,7 @@ export default function DisclaimerBanner() {
                 <Info className="h-3.5 w-3.5 text-amber-600 flex-shrink-0 mt-0.5" />
                 <div className="flex-1 min-w-0">
                     <p className="text-[10px] text-amber-800 leading-snug">
-                        This is <strong>not officially endorsed or affiliated</strong> with The University of Melbourne or its related parties.
+                        This is <strong>not officially endorsed or affiliated</strong> with The University to Melbourne or its related parties. UoM does not guarantee the safety of any external redirects.
                     </p>
                     <p className="text-[10px] text-amber-700 leading-snug mt-0.5">
                         This is a student-led project made by <strong>Team BarryAI</strong>.
