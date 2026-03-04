@@ -46,6 +46,12 @@ export default function Home() {
                         <button className="px-3 py-2 hover:bg-white/10 transition-colors">
                             <Search className="h-3.5 w-3.5" />
                         </button>
+                        {isAuthenticated && (
+                            <button onClick={handleSignOut} className="px-3 py-2 hover:bg-white/10 transition-colors flex items-center gap-1" title="Sign out">
+                                <LogOut className="h-3.5 w-3.5" />
+                                <span>Sign out</span>
+                            </button>
+                        )}
                     </div>
                 </div>
             </div>
@@ -197,7 +203,7 @@ export default function Home() {
                             className="bg-[#00B2A9] hover:bg-[#009990] px-5 py-2.5 text-sm font-semibold transition-colors text-center">
                             Contact Stop 1
                         </a>
-                        <button onClick={() => setIsChatOpen(true)}
+                        <button onClick={handleChatClick}
                             className="bg-white/20 hover:bg-white/30 border border-white/40 px-5 py-2.5 text-sm font-semibold transition-colors text-center">
                             Chat with BarryAI
                         </button>
@@ -260,7 +266,7 @@ export default function Home() {
             </footer>
 
             {/* Barry Chat Widget */}
-            <ChatButton isOpen={isChatOpen} onClick={() => setIsChatOpen(!isChatOpen)} />
+            <ChatButton isOpen={isChatOpen} onClick={handleChatClick} />
 
             <AnimatePresence>
                 {isChatOpen && (
