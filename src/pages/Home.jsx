@@ -75,6 +75,11 @@ export default function Home() {
                     </div>
                     {/* Mobile right controls */}
                     <div className="sm:hidden flex items-center gap-1">
+                        {isAuthenticated && (
+                            <button onClick={handleSignOut} className="flex items-center justify-center h-9 w-9 text-[#003087]" aria-label="Sign out" title="Sign out">
+                                <LogOut className="h-4 w-4" />
+                            </button>
+                        )}
                         <button className="flex items-center justify-center h-9 w-9 text-[#003087]" aria-label="Search">
                             <Search className="h-4 w-4" />
                         </button>
