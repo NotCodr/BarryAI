@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Search, ChevronRight, ArrowRight, Menu, X } from 'lucide-react';
+import { Search, ChevronRight, ArrowRight, Menu, X, LogOut } from 'lucide-react';
+import { base44 } from '@/api/base44Client';
 import ChatButton from '@/components/chat/ChatButton';
 import ChatWindow from '@/components/chat/ChatWindow';
 
@@ -9,6 +10,28 @@ const UOM_LOGO = "https://www.unimelb.edu.au/__data/assets/image/0007/3843821/UO
 export default function Home() {
     const [isChatOpen, setIsChatOpen] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+    useEffect(() => {
+        base44.auth.isAuthenticated().then(setIsAuthenticated);
+    }, []);
+
+    const handleChatClick = async () => {
+        if (isChatOpen) {
+            setIsChatOpen(false);
+            return;
+        }
+        const authed = await base44.auth.isAuthenticated();
+        if (!authed) {
+            base44.auth.redirectToLogin(window.location.href);
+            return;
+        }
+        setIsChatOpen(true);
+    };
+
+    const handleSignOut = () => {
+        base44.auth.logout(window.location.href);
+    };
 
     return (
         <div className="min-h-screen bg-white font-sans">
