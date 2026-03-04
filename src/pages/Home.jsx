@@ -13,7 +13,7 @@ export default function Home() {
     return (
         <div className="min-h-screen bg-white font-sans">
 
-            {/* Top utility bar */}
+            {/* Top utility bar - desktop only */}
             <div className="bg-[#003087] text-white hidden sm:block">
                 <div className="max-w-7xl mx-auto px-4 flex justify-end">
                     <div className="flex text-[11px] divide-x divide-white/20">
@@ -44,7 +44,37 @@ export default function Home() {
                             </a>
                         ))}
                     </div>
+                    {/* Mobile menu button */}
+                    <button
+                        className="sm:hidden flex items-center justify-center h-9 w-9 text-[#003087]"
+                        onClick={() => setIsMobileMenuOpen(prev => !prev)}
+                        aria-label="Toggle menu"
+                    >
+                        {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+                    </button>
                 </div>
+
+                {/* Mobile utility links - expands below header */}
+                <AnimatePresence>
+                    {isMobileMenuOpen && (
+                        <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.2 }}
+                            className="sm:hidden overflow-hidden bg-[#003087]"
+                        >
+                            <div className="flex flex-wrap justify-center divide-x divide-white/20 text-[12px]">
+                                {['Students', 'Library', 'Staff', 'Alumni', 'Giving', 'Contact'].map(item => (
+                                    <a key={item} href="#" className="px-4 py-3 text-white hover:bg-white/10 transition-colors">{item}</a>
+                                ))}
+                                <button className="px-4 py-3 text-white hover:bg-white/10 transition-colors">
+                                    <Search className="h-4 w-4" />
+                                </button>
+                            </div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
             </nav>
 
             {/* Hero Banner */}
