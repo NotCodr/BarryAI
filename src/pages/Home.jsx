@@ -44,14 +44,19 @@ export default function Home() {
                             </a>
                         ))}
                     </div>
-                    {/* Mobile menu button */}
-                    <button
-                        className="sm:hidden flex items-center justify-center h-9 w-9 text-[#003087]"
-                        onClick={() => setIsMobileMenuOpen(prev => !prev)}
-                        aria-label="Toggle menu"
-                    >
-                        {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-                    </button>
+                    {/* Mobile right controls */}
+                    <div className="sm:hidden flex items-center gap-1">
+                        <button className="flex items-center justify-center h-9 w-9 text-[#003087]" aria-label="Search">
+                            <Search className="h-4 w-4" />
+                        </button>
+                        <button
+                            className="flex items-center justify-center h-9 w-9 text-[#003087]"
+                            onClick={() => setIsMobileMenuOpen(prev => !prev)}
+                            aria-label="Toggle menu"
+                        >
+                            {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+                        </button>
+                    </div>
                 </div>
 
                 {/* Mobile utility links - expands below header */}
@@ -64,13 +69,10 @@ export default function Home() {
                             transition={{ duration: 0.2 }}
                             className="sm:hidden overflow-hidden bg-[#003087]"
                         >
-                            <div className="flex flex-wrap justify-center divide-x divide-white/20 text-[12px]">
+                            <div className="flex justify-between divide-x divide-white/20 text-[11px]">
                                 {['Students', 'Library', 'Staff', 'Alumni', 'Giving', 'Contact'].map(item => (
-                                    <a key={item} href="#" className="px-4 py-3 text-white hover:bg-white/10 transition-colors">{item}</a>
+                                    <a key={item} href="#" className="flex-1 text-center py-2.5 text-white hover:bg-white/10 transition-colors">{item}</a>
                                 ))}
-                                <button className="px-4 py-3 text-white hover:bg-white/10 transition-colors">
-                                    <Search className="h-4 w-4" />
-                                </button>
                             </div>
                         </motion.div>
                     )}
