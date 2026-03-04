@@ -3,17 +3,34 @@ import { base44 } from '@/api/base44Client';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { X, Send, Sparkles, Loader2 } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import MessageBubble from './MessageBubble';
+import LanguageSwitcher from './LanguageSwitcher';
+import VoiceInput from './VoiceInput';
+import DisclaimerBanner from './DisclaimerBanner';
 
 const BARRY_AVATAR = "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69a899204895a2076449c374/6dad36f12_BarryAIProfile.png";
 
-const QUICK_PROMPTS = [
-    "Where are the libraries?",
-    "How do I join clubs?",
-    "Help with enrollment",
-    "Student support services"
-];
+const QUICK_PROMPTS = {
+    en: ["Where are the libraries?", "How do I enrol in subjects?", "Student support services", "UMSU clubs & societies"],
+    zh: ["图书馆在哪里？", "如何选课？", "学生支持服务", "社团活动"],
+    hi: ["पुस्तकालय कहाँ हैं?", "विषयों में नामांकन कैसे करें?", "छात्र सहायता सेवाएं", "क्लब और समाज"],
+    es: ["¿Dónde están las bibliotecas?", "¿Cómo me matriculo?", "Servicios de apoyo estudiantil", "Clubes y sociedades"],
+};
+
+const LANG_INSTRUCTIONS = {
+    en: "Please respond in English.",
+    zh: "请用简体中文回答。",
+    hi: "कृपया हिंदी में उत्तर दें।",
+    es: "Por favor responde en español.",
+};
+
+const GREETING = {
+    en: "Welcome to BarryAI. I am Barry, your University of Melbourne student assistant. I can help you navigate university services, enrollment, campus facilities, student support, and more. How may I assist you today?",
+    zh: "欢迎使用 BarryAI。我是 Barry，您的墨尔本大学学生助手。我可以帮助您了解大学服务、选课、校园设施、学生支持等信息。请问有什么可以帮您的吗？",
+    hi: "BarryAI में आपका स्वागत है। मैं Barry हूं, आपका University of Melbourne छात्र सहायक। मैं विश्वविद्यालय सेवाओं, नामांकन, परिसर सुविधाओं और छात्र सहायता में आपकी मदद कर सकता हूं। आज मैं आपकी किस प्रकार सहायता कर सकता हूं?",
+    es: "Bienvenido a BarryAI. Soy Barry, tu asistente estudiantil de la Universidad de Melbourne. Puedo ayudarte con servicios universitarios, inscripción, instalaciones del campus y más. ¿En qué puedo asistirte hoy?",
+};
 
 export default function ChatWindow({ isOpen, onClose }) {
     const [conversation, setConversation] = useState(null);
@@ -21,15 +38,15 @@ export default function ChatWindow({ isOpen, onClose }) {
     const [inputValue, setInputValue] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [isSending, setIsSending] = useState(false);
+    const [currentLang, setCurrentLang] = useState('en');
+    const [outOfBoundsCount, setOutOfBoundsCount] = useState(0);
     const messagesEndRef = useRef(null);
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     };
 
-    useEffect(() => {
-        scrollToBottom();
-    }, [messages]);
+    useEffect(() => { scrollToBottom(); }, [messages]);
 
     useEffect(() => {
         if (isOpen && !conversation) {
@@ -39,7 +56,6 @@ export default function ChatWindow({ isOpen, onClose }) {
 
     useEffect(() => {
         if (!conversation?.id) return;
-        
         const unsubscribe = base44.agents.subscribeToConversation(conversation.id, (data) => {
             setMessages(data.messages || []);
             const lastMessage = data.messages?.[data.messages.length - 1];
@@ -47,47 +63,42 @@ export default function ChatWindow({ isOpen, onClose }) {
                 setIsSending(false);
             }
         });
-
         return () => unsubscribe();
     }, [conversation?.id]);
 
     const initConversation = async () => {
         setIsLoading(true);
-        try {
-            const newConversation = await base44.agents.createConversation({
-                agent_name: "barry_ai",
-                metadata: { name: "BarryAI Chat" }
-            });
-            setConversation(newConversation);
-            setMessages([{
-                role: 'assistant',
-                content: "G'day! 👋 I'm Barry, your friendly University of Melbourne guide! Whether you're looking for the best study spots, need help with enrollment, or want to find your tribe through clubs and societies - I'm here to help! What can I help you with today?"
-            }]);
-        } catch (error) {
-            console.error('Failed to create conversation:', error);
-        } finally {
-            setIsLoading(false);
+        const newConversation = await base44.agents.createConversation({
+            agent_name: "barry_ai",
+            metadata: { name: "BarryAI Chat" }
+        });
+        setConversation(newConversation);
+        setMessages([{ role: 'assistant', content: GREETING['en'] }]);
+        setIsLoading(false);
+    };
+
+    const handleLanguageChange = (lang) => {
+        setCurrentLang(lang);
+        if (conversation) {
+            setMessages(prev => [
+                ...prev,
+                { role: 'assistant', content: GREETING[lang] }
+            ]);
         }
     };
 
     const sendMessage = async (content) => {
         if (!content.trim() || !conversation || isSending) return;
-        
         setIsSending(true);
         setInputValue('');
-        
-        // Optimistically add user message
+
+        const messageWithLang = `[${LANG_INSTRUCTIONS[currentLang]}] ${content}`;
         setMessages(prev => [...prev, { role: 'user', content }]);
-        
-        try {
-            await base44.agents.addMessage(conversation, {
-                role: 'user',
-                content
-            });
-        } catch (error) {
-            console.error('Failed to send message:', error);
-            setIsSending(false);
-        }
+
+        await base44.agents.addMessage(conversation, {
+            role: 'user',
+            content: messageWithLang
+        });
     };
 
     const handleSubmit = (e) => {
@@ -95,11 +106,11 @@ export default function ChatWindow({ isOpen, onClose }) {
         sendMessage(inputValue);
     };
 
-    const handleQuickPrompt = (prompt) => {
-        sendMessage(prompt);
+    const handleVoiceTranscript = (transcript) => {
+        setInputValue(transcript);
     };
 
-    if (!isOpen) return null;
+    const prompts = QUICK_PROMPTS[currentLang] || QUICK_PROMPTS.en;
 
     return (
         <motion.div
@@ -107,72 +118,65 @@ export default function ChatWindow({ isOpen, onClose }) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="fixed bottom-24 right-4 md:right-6 w-[calc(100vw-2rem)] md:w-[400px] h-[600px] max-h-[80vh] bg-gradient-to-b from-[#f0f7ff] to-white rounded-3xl shadow-2xl overflow-hidden z-50 flex flex-col border border-[#094183]/10"
+            className="fixed bottom-24 right-4 md:right-6 w-[calc(100vw-2rem)] md:w-[400px] h-[620px] max-h-[85vh] bg-white rounded-3xl shadow-2xl overflow-hidden z-50 flex flex-col border border-gray-200"
         >
             {/* Header */}
-            <div className="bg-gradient-to-r from-[#094183] to-[#0d5299] p-4 text-white">
+            <div className="bg-[#003087] p-4 text-white flex-shrink-0">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                         <div className="relative">
-                            <div className="h-12 w-12 rounded-full overflow-hidden border-2 border-white/30 shadow-lg">
-                                <img 
-                                    src={BARRY_AVATAR} 
-                                    alt="Barry" 
-                                    className="h-full w-full object-cover"
-                                />
+                            <div className="h-11 w-11 rounded-full overflow-hidden border-2 border-white/40 shadow-lg">
+                                <img src={BARRY_AVATAR} alt="Barry" className="h-full w-full object-cover" />
                             </div>
-                            <div className="absolute -bottom-0.5 -right-0.5 h-4 w-4 bg-green-400 rounded-full border-2 border-white"></div>
+                            <div className="absolute -bottom-0.5 -right-0.5 h-3.5 w-3.5 bg-green-400 rounded-full border-2 border-white"></div>
                         </div>
                         <div>
-                            <h3 className="font-semibold text-lg flex items-center gap-2">
+                            <h3 className="font-bold text-base flex items-center gap-1.5">
                                 BarryAI
-                                <Sparkles className="h-4 w-4 text-yellow-300" />
+                                <Sparkles className="h-3.5 w-3.5 text-yellow-300" />
                             </h3>
-                            <p className="text-white/80 text-xs">Your UoM Student Guide</p>
+                            <p className="text-white/75 text-[11px]">University of Melbourne Student Assistant</p>
                         </div>
                     </div>
-                    <Button 
-                        variant="ghost" 
-                        size="icon"
-                        onClick={onClose}
-                        className="text-white hover:bg-white/20 rounded-full"
-                    >
-                        <X className="h-5 w-5" />
-                    </Button>
+                    <div className="flex items-center gap-1">
+                        <LanguageSwitcher currentLang={currentLang} onLanguageChange={handleLanguageChange} />
+                        <Button variant="ghost" size="icon" onClick={onClose}
+                            className="text-white hover:bg-white/20 rounded-full h-8 w-8">
+                            <X className="h-4 w-4" />
+                        </Button>
+                    </div>
                 </div>
             </div>
 
+            {/* Disclaimer */}
+            <DisclaimerBanner />
+
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4">
+            <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
                 {isLoading ? (
                     <div className="flex items-center justify-center h-full">
-                        <Loader2 className="h-8 w-8 animate-spin text-[#094183]" />
+                        <Loader2 className="h-8 w-8 animate-spin text-[#003087]" />
                     </div>
                 ) : (
                     <>
                         {messages.map((message, index) => (
-                            <MessageBubble 
-                                key={index} 
-                                message={message} 
-                                barryAvatar={BARRY_AVATAR}
-                            />
+                            <MessageBubble key={index} message={message} barryAvatar={BARRY_AVATAR} />
                         ))}
-                        
+
                         {isSending && (
                             <div className="flex gap-3 items-start">
-                                <div className="h-8 w-8 rounded-full overflow-hidden flex-shrink-0 shadow-md border-2 border-white">
+                                <div className="h-8 w-8 rounded-full overflow-hidden flex-shrink-0 shadow border border-white">
                                     <img src={BARRY_AVATAR} alt="Barry" className="h-full w-full object-cover" />
                                 </div>
                                 <div className="bg-white border border-gray-100 rounded-2xl rounded-bl-md px-4 py-3 shadow-sm">
                                     <div className="flex gap-1.5">
-                                        <div className="w-2 h-2 bg-[#094183] rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                                        <div className="w-2 h-2 bg-[#094183] rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                                        <div className="w-2 h-2 bg-[#094183] rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                                        <div className="w-2 h-2 bg-[#003087] rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                                        <div className="w-2 h-2 bg-[#003087] rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                                        <div className="w-2 h-2 bg-[#003087] rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
                                     </div>
                                 </div>
                             </div>
                         )}
-                        
                         <div ref={messagesEndRef} />
                     </>
                 )}
@@ -180,15 +184,12 @@ export default function ChatWindow({ isOpen, onClose }) {
 
             {/* Quick Prompts */}
             {messages.length <= 1 && !isLoading && (
-                <div className="px-4 pb-2">
-                    <p className="text-xs text-gray-500 mb-2">Quick questions:</p>
-                    <div className="flex flex-wrap gap-2">
-                        {QUICK_PROMPTS.map((prompt, index) => (
-                            <button
-                                key={index}
-                                onClick={() => handleQuickPrompt(prompt)}
-                                className="text-xs px-3 py-1.5 bg-[#094183]/10 text-[#094183] rounded-full hover:bg-[#094183]/20 transition-colors"
-                            >
+                <div className="px-4 py-2 bg-gray-50 border-t border-gray-100 flex-shrink-0">
+                    <p className="text-[10px] text-gray-400 mb-1.5 uppercase tracking-wide font-medium">Suggested questions</p>
+                    <div className="flex flex-wrap gap-1.5">
+                        {prompts.map((prompt, index) => (
+                            <button key={index} onClick={() => sendMessage(prompt)}
+                                className="text-[11px] px-3 py-1.5 bg-[#003087]/10 text-[#003087] rounded-full hover:bg-[#003087]/20 transition-colors font-medium">
                                 {prompt}
                             </button>
                         ))}
@@ -197,25 +198,23 @@ export default function ChatWindow({ isOpen, onClose }) {
             )}
 
             {/* Input */}
-            <form onSubmit={handleSubmit} className="p-4 bg-white border-t border-gray-100">
-                <div className="flex gap-2">
+            <form onSubmit={handleSubmit} className="p-3 bg-white border-t border-gray-200 flex-shrink-0">
+                <div className="flex gap-2 items-center">
+                    <VoiceInput onTranscript={handleVoiceTranscript} disabled={isLoading || isSending} lang={currentLang} />
                     <Input
                         value={inputValue}
                         onChange={(e) => setInputValue(e.target.value)}
-                        placeholder="Ask Barry anything..."
-                        className="flex-1 rounded-full border-gray-200 focus:border-[#094183] focus:ring-[#094183]/20"
+                        placeholder={currentLang === 'zh' ? '向 Barry 提问...' : currentLang === 'hi' ? 'Barry से पूछें...' : currentLang === 'es' ? 'Pregunta a Barry...' : 'Ask Barry a question...'}
+                        className="flex-1 rounded-full border-gray-200 text-sm h-10"
                         disabled={isLoading || isSending}
                     />
-                    <Button 
-                        type="submit"
-                        disabled={!inputValue.trim() || isLoading || isSending}
-                        className="rounded-full bg-[#094183] hover:bg-[#0d5299] h-10 w-10 p-0"
-                    >
+                    <Button type="submit" disabled={!inputValue.trim() || isLoading || isSending}
+                        className="rounded-full bg-[#003087] hover:bg-[#002060] h-10 w-10 p-0 flex-shrink-0">
                         <Send className="h-4 w-4" />
                     </Button>
                 </div>
-                <p className="text-center text-xs text-gray-400 mt-2">
-                    Powered by University of Melbourne Student Services
+                <p className="text-center text-[9px] text-gray-300 mt-2">
+                    BarryAI · Team BarryAI · Not officially affiliated with The University of Melbourne
                 </p>
             </form>
         </motion.div>
