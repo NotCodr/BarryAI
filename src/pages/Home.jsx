@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Search, ChevronRight, ArrowRight, Menu, X } from 'lucide-react';
+import { base44 } from '@/api/base44Client';
 import ChatButton from '@/components/chat/ChatButton';
 import ChatWindow from '@/components/chat/ChatWindow';
 
@@ -9,6 +10,30 @@ const UOM_LOGO = "https://www.unimelb.edu.au/__data/assets/image/0007/3843821/UO
 export default function Home() {
     const [isChatOpen, setIsChatOpen] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+    useEffect(() => {
+        base44.auth.isAuthenticated().then(setIsAuthenticated);
+        // Auto-open chat if user returned from login with openChat param
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('openChat') === 'true') {
+            base44.auth.isAuthenticated().then((auth) => {
+                if (auth) setIsChatOpen(true);
+            });
+        }
+    }, []);
+
+    const handleChatToggle = () => {
+        if (isChatOpen) {
+            setIsChatOpen(false);
+            return;
+        }
+        if (!isAuthenticated) {
+            base44.auth.redirectToLogin('Home?openChat=true');
+            return;
+        }
+        setIsChatOpen(true);
+    };
 
     return (
         <div className="min-h-screen bg-white font-sans">
@@ -174,7 +199,7 @@ export default function Home() {
                             className="bg-[#00B2A9] hover:bg-[#009990] px-5 py-2.5 text-sm font-semibold transition-colors text-center">
                             Contact Stop 1
                         </a>
-                        <button onClick={() => setIsChatOpen(true)}
+                        <button onClick={handleChatToggle}
                             className="bg-white/20 hover:bg-white/30 border border-white/40 px-5 py-2.5 text-sm font-semibold transition-colors text-center">
                             Chat with BarryAI
                         </button>
@@ -237,7 +262,7 @@ export default function Home() {
             </footer>
 
             {/* Barry Chat Widget */}
-            <ChatButton isOpen={isChatOpen} onClick={() => setIsChatOpen(!isChatOpen)} />
+            <ChatButton isOpen={isChatOpen} onClick={handleChatToggle} />
 
             <AnimatePresence>
                 {isChatOpen && (
