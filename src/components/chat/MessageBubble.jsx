@@ -125,7 +125,7 @@ export default function MessageBubble({ message, barryAvatar }) {
                 {!isUser && disclaimers.length > 0 && (
                     <div className="mt-1.5 px-1 space-y-0.5">
                         {disclaimers.map((d, i) => (
-                            <p key={i} className="text-[10px] text-gray-400 leading-snug">{d}</p>
+                            <p key={i} className="text-[10px] text-white leading-snug">{d}</p>
                         ))}
                     </div>
                 )}
