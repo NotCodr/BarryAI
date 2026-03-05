@@ -45,63 +45,38 @@ export default function Home() {
             {/* Disclaimer Banner */}
             <DisclaimerBar />
 
-            {/* Top utility bar */}
-            <div className="bg-[#0c1f42] text-white hidden sm:block">
+            {/* Header */}
+            <header className="bg-[#0c1f42] text-white sticky top-0 z-40">
+                {/* Top row: logo + utility links */}
                 <div className="max-w-[1200px] mx-auto px-6 flex items-center justify-between">
-                    <div className="flex items-center py-2">
+                    <div className="flex items-center py-1">
                         <img 
                             src="https://d2glwx35mhbfwf.cloudfront.net/v13.4.1/logo-with-padding.svg" 
                             alt="University of Melbourne" 
-                            className="h-[58px]"
+                            className="h-[58px] hidden sm:block"
                         />
+                        <div className="sm:hidden flex flex-col leading-tight">
+                            <span className="text-[8px] tracking-[0.15em] uppercase text-white/60">The University of</span>
+                            <span className="text-sm font-bold tracking-tight">Melbourne</span>
+                        </div>
                     </div>
                     <div className="flex items-center">
-                        <div className="flex text-[11px] tracking-wider uppercase divide-x divide-white/20">
+                        <div className="hidden sm:flex text-[11px] tracking-wider uppercase">
                             {['Students', 'Library', 'Staff', 'Alumni', 'Giving', 'Contact'].map(item => (
-                                <a key={item} href="#" className="px-4 py-3 hover:underline transition-colors">{item}</a>
+                                <a key={item} href="#" className="px-3 py-2 hover:underline transition-colors">{item}</a>
                             ))}
                         </div>
-                        <button className="ml-2 p-2.5 bg-[#003087] hover:bg-white/20 transition-colors">
-                            <Search className="h-4 w-4" />
-                        </button>
                         {isAuthenticated && (
-                            <button onClick={handleSignOut} className="ml-1 px-3 py-2 hover:bg-white/10 transition-colors flex items-center gap-1.5 text-[11px] uppercase tracking-wider" title="Sign out">
+                            <button onClick={handleSignOut} className="px-2 py-2 hover:bg-white/10 transition-colors flex items-center gap-1 text-[11px] uppercase tracking-wider" title="Sign out">
                                 <LogOut className="h-3.5 w-3.5" />
-                                <span>Sign out</span>
+                                <span className="hidden sm:inline">Sign out</span>
                             </button>
                         )}
-                    </div>
-                </div>
-            </div>
-
-            {/* Secondary nav */}
-            <nav className="bg-white border-b border-gray-200 sticky top-0 z-40">
-                <div className="max-w-[1200px] mx-auto px-6 flex items-center justify-between h-12">
-                    {/* Mobile logo */}
-                    <div className="flex items-center gap-2 sm:hidden">
-                        <span className="text-[9px] font-semibold text-[#0c1f42] tracking-widest uppercase leading-none">The University of</span>
-                        <span className="text-base font-bold text-[#0c1f42] tracking-tight">Melbourne</span>
-                    </div>
-                    <div className="hidden sm:block" /> {/* spacer on desktop */}
-                    <div className="hidden md:flex items-center gap-0">
-                        {['Study', 'Research', 'About us'].map(item => (
-                            <a key={item} href="#" className="flex items-center gap-1 text-sm text-gray-700 hover:text-[#0c1f42] transition-colors px-5 py-3 border-b-2 border-transparent hover:border-[#003087]">
-                                {item}
-                                <ChevronDown className="h-3.5 w-3.5" />
-                            </a>
-                        ))}
-                    </div>
-                    <div className="sm:hidden flex items-center gap-1">
-                        {isAuthenticated && (
-                            <button onClick={handleSignOut} className="flex items-center justify-center h-9 w-9 text-[#0c1f42]" aria-label="Sign out">
-                                <LogOut className="h-4 w-4" />
-                            </button>
-                        )}
-                        <button className="flex items-center justify-center h-9 w-9 text-[#0c1f42]" aria-label="Search">
+                        <button className="ml-1 p-2.5 bg-[#003087] hover:bg-white/20 transition-colors">
                             <Search className="h-4 w-4" />
                         </button>
                         <button
-                            className="flex items-center justify-center h-9 w-9 text-[#0c1f42]"
+                            className="sm:hidden ml-1 p-2 hover:bg-white/10 transition-colors"
                             onClick={() => setIsMobileMenuOpen(prev => !prev)}
                             aria-label="Toggle menu"
                         >
@@ -109,6 +84,16 @@ export default function Home() {
                         </button>
                     </div>
                 </div>
+                {/* Bottom row: main nav right-aligned */}
+                <div className="max-w-[1200px] mx-auto px-6 hidden md:flex justify-end border-t border-white/10">
+                    {['Study', 'Research', 'About us'].map(item => (
+                        <a key={item} href="#" className="flex items-center gap-1 text-[13px] text-white/80 hover:text-white transition-colors px-4 py-2">
+                            {item}
+                            <ChevronDown className="h-3.5 w-3.5" />
+                        </a>
+                    ))}
+                </div>
+                {/* Mobile menu */}
                 <AnimatePresence>
                     {isMobileMenuOpen && (
                         <motion.div
@@ -116,17 +101,17 @@ export default function Home() {
                             animate={{ height: 'auto', opacity: 1 }}
                             exit={{ height: 0, opacity: 0 }}
                             transition={{ duration: 0.2 }}
-                            className="sm:hidden overflow-hidden border-t border-gray-100"
+                            className="sm:hidden overflow-hidden border-t border-white/10"
                         >
-                            <div className="py-2 px-4 space-y-1">
+                            <div className="py-2 px-6 space-y-1">
                                 {['Study', 'Research', 'About us', 'Students', 'Library', 'Staff', 'Alumni', 'Giving', 'Contact'].map(item => (
-                                    <a key={item} href="#" className="block py-2 text-sm text-gray-700 hover:text-[#003087]">{item}</a>
+                                    <a key={item} href="#" className="block py-2 text-sm text-white/80 hover:text-white">{item}</a>
                                 ))}
                             </div>
                         </motion.div>
                     )}
                 </AnimatePresence>
-            </nav>
+            </header>
 
             <HeroSection />
             <QuickLinks />
