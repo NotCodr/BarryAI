@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import { cn } from "@/lib/utils";
+import { MapPin } from 'lucide-react';
 
 // Extract disclaimer lines from message content (lines starting with "Please note:")
 function splitContentAndDisclaimers(content) {
