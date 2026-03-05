@@ -6,7 +6,7 @@ export default function ModeSwitcher({ isStudentMode, onToggle }) {
         <div className="flex items-center gap-1 px-3 py-1.5 bg-[#002060] flex-shrink-0">
             <div className="flex w-full bg-white/10 rounded-full p-0.5">
                 <button
-                    onClick={onToggle}
+                    onClick={() => { if (isStudentMode) onToggle(); }}
                     className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-full text-[11px] font-semibold transition-all duration-300 ${
                         !isStudentMode
                             ? 'bg-white text-[#003087] shadow-sm'
@@ -17,7 +17,7 @@ export default function ModeSwitcher({ isStudentMode, onToggle }) {
                     Visitor
                 </button>
                 <button
-                    onClick={onToggle}
+                    onClick={() => { if (!isStudentMode) onToggle(); }}
                     className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-full text-[11px] font-semibold transition-all duration-300 ${
                         isStudentMode
                             ? 'bg-white text-[#003087] shadow-sm'
