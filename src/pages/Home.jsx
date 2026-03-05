@@ -175,7 +175,7 @@ export default function Home() {
                 <h2 className="text-xl sm:text-2xl font-bold text-[#003087] mb-5 sm:mb-8">Student Resources</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
                     {[
-                        { title: 'New Students', desc: 'Orientation, enrolment guides, and everything you need to get started at UoM.', img: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&q=80', href: 'https://students.unimelb.edu.au' },
+                        { title: 'New Students', desc: 'Orientation, enrolment guides, and everything you need to get started at UoM.', img: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=600&q=80', href: 'https://students.unimelb.edu.au' },
                         { title: 'Current Students', desc: 'Access the student portal, LMS, class timetables, and academic support.', img: 'https://images.unsplash.com/photo-1519452635265-7b1fbfd1e4e0?w=600&q=80', href: 'https://my.unimelb.edu.au' },
                         { title: 'International Students', desc: 'Visa support, OSHC, cultural resources and community for international students.', img: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&q=80', href: 'https://students.unimelb.edu.au/support-and-wellbeing/support-for-international-students' },
                     ].map(card => (
