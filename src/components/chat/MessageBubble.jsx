@@ -5,15 +5,20 @@ import { MapPin } from 'lucide-react';
 
 // Extract disclaimer lines from message content (lines starting with "Please note:")
 function splitContentAndDisclaimers(content) {
-    if (!content) return { mainContent: content, disclaimers: [] };
+    if (!content) return { mainContent: content, disclaimers: [], mapQueries: [] };
 
     const lines = content.split('\n');
     const disclaimerLines = [];
     const mainLines = [];
+    const mapQueries = [];
 
     for (const line of lines) {
         const trimmed = line.trim();
-        if (
+        // Detect [MAP:...] tags
+        const mapMatch = trimmed.match(/\[MAP:(.+?)\]/);
+        if (mapMatch) {
+            mapQueries.push(mapMatch[1].trim());
+        } else if (
             trimmed.match(/^please note:/i) ||
             trimmed.match(/^note:/i) ||
             trimmed.match(/operates independently of the university of melbourne/i) ||
@@ -27,12 +32,41 @@ function splitContentAndDisclaimers(content) {
 
     // Clean up trailing blank lines from main content
     const mainContent = mainLines.join('\n').replace(/\n{3,}/g, '\n\n').trim();
-    return { mainContent, disclaimers: disclaimerLines };
+    return { mainContent, disclaimers: disclaimerLines, mapQueries };
+}
+
+function EmbeddedMap({ query }) {
+    const encodedQuery = encodeURIComponent(query);
+    const mapsLink = `https://www.google.com/maps/search/?api=1&query=${encodedQuery}`;
+
+    return (
+        <div className="mt-2 rounded-xl overflow-hidden border border-gray-200 shadow-sm">
+            <iframe
+                src={`https://www.google.com/maps?q=${encodedQuery}&output=embed`}
+                width="100%"
+                height="180"
+                style={{ border: 0 }}
+                allowFullScreen=""
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title={`Map: ${query}`}
+            />
+            <a
+                href={mapsLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1.5 px-3 py-2 bg-gray-50 text-xs text-[#094183] font-medium hover:bg-gray-100 transition-colors"
+            >
+                <MapPin className="h-3 w-3" />
+                Open in Google Maps
+            </a>
+        </div>
+    );
 }
 
 export default function MessageBubble({ message, barryAvatar }) {
     const isUser = message.role === 'user';
-    const { mainContent, disclaimers } = splitContentAndDisclaimers(message.content);
+    const { mainContent, disclaimers, mapQueries } = splitContentAndDisclaimers(message.content);
 
     return (
         <div className={cn("flex gap-3", isUser ? "justify-end" : "justify-start")}>
@@ -75,6 +109,15 @@ export default function MessageBubble({ message, barryAvatar }) {
                                 {mainContent}
                             </ReactMarkdown>
                         )}
+                    </div>
+                )}
+
+                {/* Embedded maps for navigation queries */}
+                {!isUser && mapQueries.length > 0 && (
+                    <div className="mt-1 space-y-2 w-full">
+                        {mapQueries.map((q, i) => (
+                            <EmbeddedMap key={i} query={q} />
+                        ))}
                     </div>
                 )}
 
