@@ -13,8 +13,10 @@ import VoiceInput from './VoiceInput';
 import DisclaimerBanner from './DisclaimerBanner';
 import ModeSwitcher from './ModeSwitcher';
 import StudentModeOverlay from './StudentModeOverlay';
+import WelcomeScreen from './WelcomeScreen';
 
 const BARRY_AVATAR = "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69a899204895a2076449c374/6dad36f12_BarryAIProfile.png";
+const BARRY_WELCOME = "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69a899204895a2076449c374/1a17c4ad9_BarryAIPrototypeNatualAestheticwithHeadsetNonCommercialUse.png";
 
 const QUICK_PROMPTS = {
   en: ["Where are the libraries?", "How do I enrol in subjects?", "Student support services", "UMSU clubs & societies"],
@@ -47,6 +49,8 @@ export default function ChatWindow({ isOpen, onClose }) {
   const [outOfBoundsCount, setOutOfBoundsCount] = useState(0);
   const [isStudentMode, setIsStudentMode] = useState(false);
   const [showStudentOverlay, setShowStudentOverlay] = useState(false);
+  const [showWelcome, setShowWelcome] = useState(true);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
