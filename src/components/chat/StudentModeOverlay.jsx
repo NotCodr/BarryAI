@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { GraduationCap, Sparkles } from 'lucide-react';
 
-const LMS_BG = "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69a899204895a2076449c374/88fb87c47.png";
+const LMS_BG = "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69a899204895a2076449c374/e291a2ef5_BackgroundPhoto.png";
 
 const STUDENT_PROMPTS = [
     "Are there any internships that the uni posted, can you check my email please?",

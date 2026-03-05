@@ -115,14 +115,12 @@ export default function ChatWindow({ isOpen, onClose }) {
   };
 
   const handleModeToggle = () => {
-    if (!isStudentMode) {
-      // Switching to student mode
-      setIsStudentMode(true);
-      setShowStudentOverlay(true);
-    } else {
-      // Switching back to visitor mode
+    if (isStudentMode) {
       setIsStudentMode(false);
       setShowStudentOverlay(false);
+    } else {
+      setIsStudentMode(true);
+      setShowStudentOverlay(true);
     }
   };
 
