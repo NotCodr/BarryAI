@@ -8,6 +8,8 @@ import MessageBubble from './MessageBubble';
 import LanguageSwitcher from './LanguageSwitcher';
 import VoiceInput from './VoiceInput';
 import DisclaimerBanner from './DisclaimerBanner';
+import ModeSwitcher from './ModeSwitcher';
+import StudentModeOverlay from './StudentModeOverlay';
 
 const BARRY_AVATAR = "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69a899204895a2076449c374/6dad36f12_BarryAIProfile.png";
 
@@ -40,6 +42,8 @@ export default function ChatWindow({ isOpen, onClose }) {
   const [isSending, setIsSending] = useState(false);
   const [currentLang, setCurrentLang] = useState('en');
   const [outOfBoundsCount, setOutOfBoundsCount] = useState(0);
+  const [isStudentMode, setIsStudentMode] = useState(false);
+  const [showStudentOverlay, setShowStudentOverlay] = useState(false);
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
@@ -109,6 +113,36 @@ export default function ChatWindow({ isOpen, onClose }) {
   const handleVoiceTranscript = (transcript) => {
     setInputValue(transcript);
   };
+
+  const handleModeToggle = () => {
+    if (!isStudentMode) {
+      // Switching to student mode
+      setIsStudentMode(true);
+      setShowStudentOverlay(true);
+    } else {
+      // Switching back to visitor mode
+      setIsStudentMode(false);
+      setShowStudentOverlay(false);
+    }
+  };
+
+  const handleStudentOverlayComplete = (wantsPersonalise) => {
+    setShowStudentOverlay(false);
+    // Add the student mode greeting
+    setMessages(prev => [...prev, {
+      role: 'assistant',
+      content: wantsPersonalise
+        ? "Great! Let's personalise your experience. What course are you studying, and what year are you in? This will help me tailor my responses to your specific needs — like your timetable, assignments, and exam schedule."
+        : "No worries! I'm ready to help. You can ask me about your classes, assignments, exams, internships, emails, and everything else — just like having a personal assistant built into your LMS. What would you like to know?"
+    }]);
+  };
+
+  const STUDENT_QUICK_PROMPTS = [
+    "What are my classes today?",
+    "Assignments due this week",
+    "When is my next exam?",
+    "Check my uni email"
+  ];
 
   const prompts = QUICK_PROMPTS[currentLang] || QUICK_PROMPTS.en;
 
