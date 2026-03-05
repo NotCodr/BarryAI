@@ -119,11 +119,18 @@ export default function ChatWindow({ isOpen, onClose }) {
 
   const handleModeToggle = () => {
     if (isStudentMode) {
+      // Switch back to visitor: clear chat, reset to welcome
       setIsStudentMode(false);
       setShowStudentOverlay(false);
+      setMessages([{ role: 'assistant', content: GREETING[currentLang] }]);
     } else {
+      // Switch to student mode: add system divider and show overlay
       setIsStudentMode(true);
       setShowStudentOverlay(true);
+      setMessages(prev => [
+        ...prev,
+        { role: 'system', content: 'Switched to Student Mode' }
+      ]);
     }
   };
 
@@ -192,14 +199,14 @@ export default function ChatWindow({ isOpen, onClose }) {
             <DisclaimerBanner />
 
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4 relative"
-                 style={{
+            <div className={`flex-1 overflow-y-auto p-4 space-y-4 relative ${isStudentMode ? 'bg-[#001a4d]' : ''}`}
+                 style={!isStudentMode ? {
                    backgroundImage: `url(${BG_IMAGE})`,
                    backgroundSize: 'cover',
                    backgroundPosition: 'center',
-                 }}>
-                {/* Background tint */}
-                <div className="absolute inset-0 bg-gray-50/90 pointer-events-none" />
+                 } : undefined}>
+                {/* Background tint - only in visitor mode */}
+                {!isStudentMode && <div className="absolute inset-0 bg-gray-50/90 pointer-events-none" />}
 
                 {isLoading ?
         <div className="relative z-10 flex items-center justify-center h-full">
@@ -208,9 +215,19 @@ export default function ChatWindow({ isOpen, onClose }) {
 
         <>
                         {messages.map((message, index) =>
-          <div key={index} className="relative z-10">
-            <MessageBubble message={message} barryAvatar={BARRY_AVATAR} />
-          </div>
+          message.role === 'system' ? (
+            <div key={index} className="relative z-10 flex items-center gap-3 my-2">
+              <div className="flex-1 h-px bg-[#003087]/20" />
+              <span className="text-[10px] font-semibold text-[#003087] uppercase tracking-wider bg-white/80 px-3 py-1 rounded-full border border-[#003087]/20">
+                {message.content}
+              </span>
+              <div className="flex-1 h-px bg-[#003087]/20" />
+            </div>
+          ) : (
+            <div key={index} className="relative z-10">
+              <MessageBubble message={message} barryAvatar={BARRY_AVATAR} />
+            </div>
+          )
           )}
 
                         {isSending &&
