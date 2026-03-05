@@ -17,7 +17,7 @@ const STORIES = [
 
 export default function NewsSection() {
     return (
-        <div className="max-w-[1200px] mx-auto px-6 py-12 sm:py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-8 py-12 sm:py-16">
             {/* Featured story */}
             <div className="grid md:grid-cols-2 gap-8 mb-10">
                 <div className="flex flex-col justify-center">

@@ -11,7 +11,7 @@ export default function HeroSection() {
             />
             <div className="absolute inset-0 bg-gradient-to-r from-[#0c1f42]/95 via-[#0c1f42]/70 to-transparent" />
             <div className="absolute inset-0 flex items-center">
-                <div className="max-w-[1200px] mx-auto px-6 w-full">
+                <div className="max-w-7xl mx-auto px-4 sm:px-8 w-full">
                     <div className="max-w-lg">
                         <h1 className="text-3xl sm:text-[42px] md:text-[50px] font-bold text-white leading-[1.1] mb-4 font-serif">
                             Welcome to the University of Melbourne

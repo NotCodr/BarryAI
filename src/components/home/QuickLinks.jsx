@@ -11,7 +11,7 @@ const LINKS = [
 export default function QuickLinks() {
     return (
         <div className="border-b border-gray-200">
-            <div className="max-w-[1200px] mx-auto px-6">
+            <div className="max-w-7xl mx-auto px-4 sm:px-8">
                 <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-gray-200">
                     {LINKS.map(item => (
                         <a key={item.title} href={item.href} target="_blank" rel="noreferrer"

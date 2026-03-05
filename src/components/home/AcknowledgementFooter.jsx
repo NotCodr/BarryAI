@@ -4,7 +4,7 @@ import { ArrowRight } from 'lucide-react';
 export default function AcknowledgementFooter() {
     return (
         <div className="bg-[#0c1f42] border-b border-white/10">
-            <div className="max-w-[1200px] mx-auto px-6 py-8">
+            <div className="max-w-7xl mx-auto px-4 sm:px-8 py-8">
                 <div className="grid md:grid-cols-[240px_1fr] gap-6 items-start">
                     <div>
                         <h4 className="text-white font-bold text-sm mb-3">Acknowledgement of Country</h4>

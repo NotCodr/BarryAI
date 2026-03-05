@@ -48,17 +48,13 @@ export default function Home() {
             {/* Header */}
             <header className="bg-[#0c1f42] text-white sticky top-0 z-40">
                 {/* Top row: logo + utility links */}
-                <div className="max-w-[1200px] mx-auto px-6 flex items-center justify-between">
+                <div className="max-w-7xl mx-auto px-4 sm:px-8 flex items-center justify-between">
                     <div className="flex items-center py-1">
                         <img 
                             src="https://d2glwx35mhbfwf.cloudfront.net/v13.4.1/logo-with-padding.svg" 
                             alt="University of Melbourne" 
-                            className="h-[58px] hidden sm:block"
+                            className="h-[44px] sm:h-[58px]"
                         />
-                        <div className="sm:hidden flex flex-col leading-tight">
-                            <span className="text-[8px] tracking-[0.15em] uppercase text-white/60">The University of</span>
-                            <span className="text-sm font-bold tracking-tight">Melbourne</span>
-                        </div>
                     </div>
                     <div className="flex items-center">
                         <div className="hidden sm:flex text-[11px] tracking-wider uppercase">
@@ -85,7 +81,7 @@ export default function Home() {
                     </div>
                 </div>
                 {/* Bottom row: main nav right-aligned */}
-                <div className="max-w-[1200px] mx-auto px-6 hidden md:flex justify-end border-t border-white/10">
+                <div className="max-w-7xl mx-auto px-4 sm:px-8 hidden md:flex justify-end border-t border-white/10">
                     {['Study', 'Research', 'About us'].map(item => (
                         <a key={item} href="#" className="flex items-center gap-1 text-[13px] text-white/80 hover:text-white transition-colors px-4 py-2">
                             {item}

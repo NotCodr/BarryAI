@@ -8,7 +8,7 @@ const FOOTER_LINKS = [
 export default function SiteFooter() {
     return (
         <footer className="bg-[#0c1f42] text-white">
-            <div className="max-w-[1200px] mx-auto px-6 py-10">
+            <div className="max-w-7xl mx-auto px-4 sm:px-8 py-10">
                 <div className="grid grid-cols-1 md:grid-cols-[200px_1fr_1fr_180px] gap-8 mb-10">
                     {/* Links */}
                     <div className="space-y-2">

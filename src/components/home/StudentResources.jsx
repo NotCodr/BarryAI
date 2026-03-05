@@ -9,7 +9,7 @@ const CARDS = [
 
 export default function StudentResources() {
     return (
-        <div className="max-w-[1200px] mx-auto px-6 py-12 sm:py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-8 py-12 sm:py-16">
             <h2 className="text-2xl font-bold text-[#0c1f42] mb-8">Student Resources</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                 {CARDS.map(card => (

@@ -3,7 +3,7 @@ import React from 'react';
 export default function NeedHelpStrip({ onChatClick }) {
     return (
         <div className="bg-[#003087] text-white">
-            <div className="max-w-[1200px] mx-auto px-6 py-8 flex flex-col items-start sm:flex-row sm:items-center justify-between gap-4">
+            <div className="max-w-7xl mx-auto px-4 sm:px-8 py-8 flex flex-col items-start sm:flex-row sm:items-center justify-between gap-4">
                 <div>
                     <h3 className="text-xl font-bold mb-1">Need Help?</h3>
                     <p className="text-white/80 text-sm">Stop 1 can answer your questions and connect you with student services.</p>
