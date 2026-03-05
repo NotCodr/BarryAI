@@ -168,20 +168,35 @@ export default function ChatWindow({ isOpen, onClose }) {
       onWheel={(e) => e.stopPropagation()}
       onTouchMove={(e) => e.stopPropagation()}>
 
+            {/* Welcome Screen Overlay */}
+            <AnimatePresence>
+                {showWelcome && !isLoading && (
+                    <WelcomeScreen onContinue={() => {
+                        setIsTransitioning(true);
+                        setShowWelcome(false);
+                        setTimeout(() => setIsTransitioning(false), 700);
+                    }} />
+                )}
+            </AnimatePresence>
+
             {/* Header */}
             <div className="bg-[#003087] p-4 text-white flex-shrink-0">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                        <div className="relative">
+                        <motion.div
+                            className="relative"
+                            initial={isTransitioning ? { scale: 3, x: 100, y: 120 } : false}
+                            animate={{ scale: 1, x: 0, y: 0 }}
+                            transition={{ type: "spring", damping: 20, stiffness: 200, duration: 0.6 }}
+                        >
                             <div className="h-11 w-11 rounded-full overflow-hidden border-2 border-white/40 shadow-lg">
-                                <img src={BARRY_AVATAR} alt="Barry" className="h-full w-full object-cover" />
+                                <img src={isTransitioning ? BARRY_WELCOME : BARRY_AVATAR} alt="Barry" className="h-full w-full object-cover" />
                             </div>
                             <div className="absolute -bottom-0.5 -right-0.5 h-3.5 w-3.5 bg-green-400 rounded-full border-2 border-white"></div>
-                        </div>
+                        </motion.div>
                         <div>
                             <h3 className="font-bold text-base flex items-center gap-1.5">
                                 BarryAI
-                                
                             </h3>
                             <p className="text-white/75 text-[11px]">University of Melbourne Student Assistant</p>
                         </div>
