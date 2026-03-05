@@ -2,7 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import { base44 } from '@/api/base44Client';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { X, Send, Sparkles, Loader2 } from 'lucide-react';
+import { X, Send, Loader2 } from 'lucide-react';
+import { AnimatePresence } from 'framer-motion';
+
+const BG_IMAGE = "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69a899204895a2076449c374/e291a2ef5_BackgroundPhoto.png";
 import { motion } from 'framer-motion';
 import MessageBubble from './MessageBubble';
 import LanguageSwitcher from './LanguageSwitcher';
@@ -150,7 +153,9 @@ export default function ChatWindow({ isOpen, onClose }) {
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0, y: 20, scale: 0.95 }}
       transition={{ type: "spring", damping: 25, stiffness: 300 }}
-      className="fixed bottom-24 right-4 md:right-6 w-[calc(100vw-2rem)] md:w-[400px] h-[620px] max-h-[85vh] bg-white rounded-3xl shadow-2xl overflow-hidden z-50 flex flex-col border border-gray-200">
+      className="fixed bottom-24 right-4 md:right-6 w-[calc(100vw-2rem)] md:w-[400px] h-[620px] max-h-[85vh] bg-white rounded-3xl shadow-2xl overflow-hidden z-50 flex flex-col border border-gray-200"
+      onWheel={(e) => e.stopPropagation()}
+      onTouchMove={(e) => e.stopPropagation()}>
 
             {/* Header */}
             <div className="bg-[#003087] p-4 text-white flex-shrink-0">
@@ -187,23 +192,29 @@ export default function ChatWindow({ isOpen, onClose }) {
             <DisclaimerBanner />
 
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50 relative">
-                {showStudentOverlay && (
-                    <StudentModeOverlay onComplete={handleStudentOverlayComplete} />
-                )}
+            <div className="flex-1 overflow-y-auto p-4 space-y-4 relative"
+                 style={{
+                   backgroundImage: `url(${BG_IMAGE})`,
+                   backgroundSize: 'cover',
+                   backgroundPosition: 'center',
+                 }}>
+                {/* Background tint */}
+                <div className="absolute inset-0 bg-gray-50/90 pointer-events-none" />
 
                 {isLoading ?
-        <div className="flex items-center justify-center h-full">
+        <div className="relative z-10 flex items-center justify-center h-full">
                         <Loader2 className="h-8 w-8 animate-spin text-[#003087]" />
                     </div> :
 
         <>
                         {messages.map((message, index) =>
-          <MessageBubble key={index} message={message} barryAvatar={BARRY_AVATAR} />
+          <div key={index} className="relative z-10">
+            <MessageBubble message={message} barryAvatar={BARRY_AVATAR} />
+          </div>
           )}
 
                         {isSending &&
-          <div className="flex gap-3 items-start">
+          <div className="relative z-10 flex gap-3 items-start">
                                 <div className="h-8 w-8 rounded-full overflow-hidden flex-shrink-0 shadow border border-white relative">
                                     <img src={BARRY_AVATAR} alt="Barry" className="h-full w-full object-cover" />
                                     <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-[#003087] animate-spin"></div>
@@ -224,6 +235,15 @@ export default function ChatWindow({ isOpen, onClose }) {
                     </>
         }
             </div>
+
+            {/* Student Mode Overlay - covers entire chat body */}
+            <AnimatePresence>
+                {showStudentOverlay && (
+                    <div className="absolute inset-0 z-40" style={{ top: 0 }}>
+                        <StudentModeOverlay onComplete={handleStudentOverlayComplete} />
+                    </div>
+                )}
+            </AnimatePresence>
 
             {/* Quick Prompts */}
             {messages.length <= 1 && !isLoading && !showStudentOverlay &&

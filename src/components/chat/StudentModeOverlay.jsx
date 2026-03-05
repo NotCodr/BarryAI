@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { GraduationCap, Sparkles } from 'lucide-react';
+import { GraduationCap } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const LMS_BG = "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69a899204895a2076449c374/e291a2ef5_BackgroundPhoto.png";
@@ -66,7 +66,6 @@ export default function StudentModeOverlay({ onComplete }) {
                         transition={{ duration: 0.35, ease: 'easeOut' }}
                         className="relative z-10 flex-1 flex flex-col items-center justify-center px-6 text-center"
                     >
-                        <Sparkles className="h-6 w-6 text-[#00B2A9] mb-3" />
                         <h3 className="text-white font-bold text-base mb-1.5">Personalise Barry?</h3>
                         <p className="text-white/80 text-sm mb-5">
                             Do you want to personalise me? Otherwise, let's get straight into it!
