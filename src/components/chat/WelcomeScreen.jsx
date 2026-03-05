@@ -29,7 +29,7 @@ export default function WelcomeScreen({ onContinue }) {
                         className="h-full w-full object-cover"
                     />
                 </div>
-                <div className="absolute -bottom-1 -right-1 h-6 w-6 bg-green-400 rounded-full border-3 border-white shadow-lg" />
+                <div className="absolute -bottom+1 -right-1 h-6 w-6 bg-green-400 rounded-full border-3 border-white shadow-lg" />
             </motion.div>
 
             {/* Text */}
