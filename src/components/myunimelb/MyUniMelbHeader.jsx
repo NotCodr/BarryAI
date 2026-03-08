@@ -42,7 +42,7 @@ export default function MyUniMelbHeader() {
             </div>
             {/* Date / weather bar */}
             <div className="bg-[#f5f5f5] text-[#333] flex items-center justify-end px-4 sm:px-6 h-8 text-[12px] gap-3">
-                <span>Today: <strong>8 March 2026</strong></span>
+                <span>Today: <strong>11 March 2026</strong></span>
                 <span className="flex items-center gap-1">☁️ Now 24°</span>
                 <Search className="h-3.5 w-3.5 text-gray-500 cursor-pointer" />
             </div>
