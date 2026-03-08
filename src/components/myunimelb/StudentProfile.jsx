@@ -22,7 +22,7 @@ export default function StudentProfile() {
                 
                 <div className="flex items-center gap-1.5 text-xs text-[#003087] mb-3">
                     <span className="font-medium">Student ID:</span>
-                    <span>1821370</span>
+                    <span>0000000</span>
                     <Copy className="h-3 w-3 cursor-pointer hover:text-[#0c1f42]" />
                 </div>
 
