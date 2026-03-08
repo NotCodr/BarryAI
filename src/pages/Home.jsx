@@ -12,6 +12,7 @@ import NeedHelpStrip from '@/components/home/NeedHelpStrip';
 import NewsSection from '@/components/home/NewsSection';
 import AcknowledgementFooter from '@/components/home/AcknowledgementFooter';
 import SiteFooter from '@/components/home/SiteFooter';
+import MyUniMelbBackground from '@/components/home/MyUniMelbBackground';
 
 export default function Home() {
     const [isChatOpen, setIsChatOpen] = useState(false);
