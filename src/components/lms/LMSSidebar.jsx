@@ -19,11 +19,9 @@ export default function LMSSidebar() {
     return (
         <div className="w-[60px] min-h-screen bg-[#0c1f42] flex flex-col items-center py-2 shrink-0">
             <div className="mb-2 p-1">
-                <img
-                    src="https://about.unimelb.edu.au/__data/assets/image/0025/31966/uom-logo.png"
-                    alt="UoM"
-                    className="h-10 w-10 object-contain"
-                />
+                <div className="h-10 w-10 bg-white/10 rounded flex items-center justify-center">
+                    <BookOpen className="h-5 w-5 text-white" />
+                </div>
             </div>
             <div className="flex flex-col items-center gap-0.5 w-full">
                 {NAV_ITEMS.map((item, i) => (
