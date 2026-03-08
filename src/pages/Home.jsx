@@ -132,7 +132,7 @@ export default function Home() {
             <ChatButton isOpen={isChatOpen} onClick={handleChatClick} />
             <AnimatePresence>
                 {isChatOpen && (
-                    <ChatWindow isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} onModeChange={(mode) => setAppMode(mode)} />
+                    <ChatWindow isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} onModeChange={(mode) => setAppMode(mode)} appMode={appMode} />
                 )}
             </AnimatePresence>
         </div>

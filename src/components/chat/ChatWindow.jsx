@@ -39,7 +39,7 @@ const GREETING = {
   es: "Bienvenido a BarryAI. Soy Barry, tu asistente estudiantil de la Universidad de Melbourne. Puedo ayudarte con servicios universitarios, inscripción, instalaciones del campus y más. ¿En qué puedo asistirte hoy?"
 };
 
-export default function ChatWindow({ isOpen, onClose, onModeChange }) {
+export default function ChatWindow({ isOpen, onClose, onModeChange, appMode }) {
   const [conversation, setConversation] = useState(null);
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState('');
@@ -47,7 +47,7 @@ export default function ChatWindow({ isOpen, onClose, onModeChange }) {
   const [isSending, setIsSending] = useState(false);
   const [currentLang, setCurrentLang] = useState('en');
   const [outOfBoundsCount, setOutOfBoundsCount] = useState(0);
-  const [isStudentMode, setIsStudentMode] = useState(false);
+  const isStudentMode = appMode === 'student' || appMode === 'lms';
   const [showStudentOverlay, setShowStudentOverlay] = useState(false);
   const [showWelcome, setShowWelcome] = useState(true);
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -124,13 +124,11 @@ export default function ChatWindow({ isOpen, onClose, onModeChange }) {
   const handleModeToggle = () => {
     if (isStudentMode) {
       // Switch back to visitor: clear chat, reset to welcome
-      setIsStudentMode(false);
       setShowStudentOverlay(false);
       setMessages([{ role: 'assistant', content: GREETING[currentLang] }]);
       onModeChange?.('visitor');
     } else {
       // Switch to student mode: add system divider and show overlay
-      setIsStudentMode(true);
       setShowStudentOverlay(true);
       setMessages(prev => [
         ...prev,
