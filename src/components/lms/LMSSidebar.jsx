@@ -20,9 +20,9 @@ export default function LMSSidebar() {
         <div className="w-[60px] min-h-screen bg-[#0c1f42] flex flex-col items-center py-2 shrink-0">
             <div className="mb-2 p-1">
                 <img
-                    src="https://d2glwx35mhbfwf.cloudfront.net/v13.4.1/logo-with-padding.svg"
+                    src="https://about.unimelb.edu.au/__data/assets/image/0025/31966/uom-logo.png"
                     alt="UoM"
-                    className="h-10 w-10 object-contain brightness-0 invert"
+                    className="h-10 w-10 object-contain"
                 />
             </div>
             <div className="flex flex-col items-center gap-0.5 w-full">
