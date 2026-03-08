@@ -123,18 +123,18 @@ export default function ChatWindow({ isOpen, onClose, onStudentModeChange }) {
 
   const handleModeToggle = () => {
     if (isStudentMode) {
-      // Switch back to visitor: clear chat, reset to welcome
       setIsStudentMode(false);
       setShowStudentOverlay(false);
       setMessages([{ role: 'assistant', content: GREETING[currentLang] }]);
+      onStudentModeChange?.(false);
     } else {
-      // Switch to student mode: add system divider and show overlay
       setIsStudentMode(true);
       setShowStudentOverlay(true);
       setMessages(prev => [
         ...prev,
         { role: 'system', content: 'Switched to Student Mode' }
       ]);
+      onStudentModeChange?.(true);
     }
   };
 
