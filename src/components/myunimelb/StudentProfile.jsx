@@ -9,7 +9,7 @@ export default function StudentProfile() {
     base44.auth.me().then(setUser).catch(() => {});
   }, []);
 
-  const displayName = user?.full_name ? user.full_name.split(' ')[0] + ' ...' : 'Student';
+  const displayName = 'Jane Doe';
 
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
