@@ -12,13 +12,11 @@ import NeedHelpStrip from '@/components/home/NeedHelpStrip';
 import NewsSection from '@/components/home/NewsSection';
 import AcknowledgementFooter from '@/components/home/AcknowledgementFooter';
 import SiteFooter from '@/components/home/SiteFooter';
-import MyUniMelbBackground from '@/components/home/MyUniMelbBackground';
 
 export default function Home() {
     const [isChatOpen, setIsChatOpen] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [isStudentMode, setIsStudentMode] = useState(false);
 
     useEffect(() => {
         base44.auth.isAuthenticated().then(setIsAuthenticated);
@@ -119,16 +117,11 @@ export default function Home() {
             <AcknowledgementFooter />
             <SiteFooter />
 
-            {/* MyUniMelb Background Overlay for Student Mode */}
-            <AnimatePresence>
-                {isStudentMode && <MyUniMelbBackground />}
-            </AnimatePresence>
-
             {/* Barry Chat Widget */}
             <ChatButton isOpen={isChatOpen} onClick={handleChatClick} />
             <AnimatePresence>
                 {isChatOpen && (
-                    <ChatWindow isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} onStudentModeChange={setIsStudentMode} />
+                    <ChatWindow isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
                 )}
             </AnimatePresence>
         </div>
