@@ -3,16 +3,16 @@ import { MapPin, Copy } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 
 export default function StudentProfile() {
-    const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null);
 
-    useEffect(() => {
-        base44.auth.me().then(setUser).catch(() => {});
-    }, []);
+  useEffect(() => {
+    base44.auth.me().then(setUser).catch(() => {});
+  }, []);
 
-    const displayName = user?.full_name ? user.full_name.split(' ')[0] + ' ...' : 'Student';
+  const displayName = user?.full_name ? user.full_name.split(' ')[0] + ' ...' : 'Student';
 
-    return (
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+  return (
+    <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
             {/* Gradient top */}
             <div className="h-16 bg-gradient-to-r from-[#0c1f42] to-[#003087]" />
             <div className="px-4 pb-4 -mt-6">
@@ -28,9 +28,9 @@ export default function StudentProfile() {
 
                 <div className="space-y-2 text-xs text-gray-600 border-t border-gray-100 pt-3">
                     <p className="font-medium text-gray-800">Bachelor of Commerce</p>
-                    <p className="flex items-center gap-1">
-                        <MapPin className="h-3 w-3" /> WILLIAMS LANDING, Australia
-                    </p>
+                    <p className="flex items-center gap-1">Australia
+
+          </p>
                     <p>Last login: <a href="#" className="text-[#003087] underline">8 Mar 2026, 2:39 p.m. AEDT</a></p>
                 </div>
             </div>
@@ -41,6 +41,6 @@ export default function StudentProfile() {
                     <span className="font-medium">Transfer your storage to OneDrive</span>
                 </div>
             </div>
-        </div>
-    );
+        </div>);
+
 }
