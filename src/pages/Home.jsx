@@ -18,6 +18,7 @@ export default function Home() {
     const [isChatOpen, setIsChatOpen] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isStudentMode, setIsStudentMode] = useState(false);
 
     useEffect(() => {
         base44.auth.isAuthenticated().then(setIsAuthenticated);
