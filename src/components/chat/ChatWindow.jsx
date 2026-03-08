@@ -39,7 +39,7 @@ const GREETING = {
   es: "Bienvenido a BarryAI. Soy Barry, tu asistente estudiantil de la Universidad de Melbourne. Puedo ayudarte con servicios universitarios, inscripción, instalaciones del campus y más. ¿En qué puedo asistirte hoy?"
 };
 
-export default function ChatWindow({ isOpen, onClose }) {
+export default function ChatWindow({ isOpen, onClose, onModeChange }) {
   const [conversation, setConversation] = useState(null);
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState('');
@@ -127,6 +127,7 @@ export default function ChatWindow({ isOpen, onClose }) {
       setIsStudentMode(false);
       setShowStudentOverlay(false);
       setMessages([{ role: 'assistant', content: GREETING[currentLang] }]);
+      onModeChange?.('visitor');
     } else {
       // Switch to student mode: add system divider and show overlay
       setIsStudentMode(true);
@@ -135,6 +136,7 @@ export default function ChatWindow({ isOpen, onClose }) {
         ...prev,
         { role: 'system', content: 'Switched to Student Mode' }
       ]);
+      onModeChange?.('student');
     }
   };
 
