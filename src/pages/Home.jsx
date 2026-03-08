@@ -119,11 +119,16 @@ export default function Home() {
             <AcknowledgementFooter />
             <SiteFooter />
 
+            {/* MyUniMelb Background Overlay for Student Mode */}
+            <AnimatePresence>
+                {isStudentMode && <MyUniMelbBackground />}
+            </AnimatePresence>
+
             {/* Barry Chat Widget */}
             <ChatButton isOpen={isChatOpen} onClick={handleChatClick} />
             <AnimatePresence>
                 {isChatOpen && (
-                    <ChatWindow isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
+                    <ChatWindow isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} onStudentModeChange={setIsStudentMode} />
                 )}
             </AnimatePresence>
         </div>
