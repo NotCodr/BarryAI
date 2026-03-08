@@ -22,7 +22,7 @@ const LINKS_ROW_3 = [
     { icon: Briefcase, label: 'Employability' },
 ];
 
-export default function QuickLinksGrid() {
+export default function QuickLinksGrid({ onNavigate }) {
     return (
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
             <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100">
@@ -33,7 +33,11 @@ export default function QuickLinksGrid() {
                 {[LINKS_ROW_1, LINKS_ROW_2, LINKS_ROW_3].map((row, ri) => (
                     <div key={ri} className="grid grid-cols-4 gap-1">
                         {row.map((link, li) => (
-                            <button key={li} className="flex flex-col items-center gap-1.5 py-3 px-1 rounded-lg hover:bg-[#f0f4ff] transition-colors group">
+                            <button
+                                key={li}
+                                className="flex flex-col items-center gap-1.5 py-3 px-1 rounded-lg hover:bg-[#f0f4ff] transition-colors group"
+                                onClick={() => link.label === 'LMS' && onNavigate && onNavigate('lms')}
+                            >
                                 <link.icon className="h-5 w-5 text-[#003087] group-hover:text-[#001a4d]" />
                                 <span className="text-[10px] text-center text-gray-600 leading-tight whitespace-pre-line">{link.label}</span>
                             </button>

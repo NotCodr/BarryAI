@@ -13,6 +13,7 @@ import NewsSection from '@/components/home/NewsSection';
 import AcknowledgementFooter from '@/components/home/AcknowledgementFooter';
 import SiteFooter from '@/components/home/SiteFooter';
 import MyUniMelbDashboard from '@/components/myunimelb/MyUniMelbDashboard';
+import LMSPage from '@/components/lms/LMSPage';
 
 export default function Home() {
     const [isChatOpen, setIsChatOpen] = useState(false);
@@ -121,9 +122,11 @@ export default function Home() {
                     <AcknowledgementFooter />
                     <SiteFooter />
                 </>
-            ) : (
-                <MyUniMelbDashboard />
-            )}
+            ) : appMode === 'student' ? (
+                <MyUniMelbDashboard onNavigate={(dest) => setAppMode(dest)} />
+            ) : appMode === 'lms' ? (
+                <LMSPage onBack={() => setAppMode('student')} />
+            ) : null}
 
             {/* Barry Chat Widget */}
             <ChatButton isOpen={isChatOpen} onClick={handleChatClick} />

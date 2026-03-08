@@ -5,7 +5,7 @@ import QuickLinksGrid from './QuickLinksGrid';
 import MyDayPanel from './MyDayPanel';
 import PromoBanner from './PromoBanner';
 
-export default function MyUniMelbDashboard() {
+export default function MyUniMelbDashboard({ onNavigate }) {
     return (
         <div className="min-h-screen bg-[#e8e8e8]">
             <MyUniMelbHeader />
@@ -17,7 +17,7 @@ export default function MyUniMelbDashboard() {
                     </div>
                     {/* Middle column - Quick Links */}
                     <div>
-                        <QuickLinksGrid />
+                        <QuickLinksGrid onNavigate={onNavigate} />
                     </div>
                     {/* Right column - My Day */}
                     <div>
