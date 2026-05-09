@@ -155,6 +155,24 @@ src/
 
 ---
 
+### Scaling
+
+The Two Stages I like to call: 
+
+
+        BURST MODE                  AND...         BOUTIQUE MODE
+─────────────────────────────────          ─────────────────────────────────
+Base44 SDK                                 Anthropic API + Vercel AI SDK
+One platform, one bill                     You own every layer
+Ships in hours or days                     Ships in weeks or months
+Limited control over model calls           Full control over prompts, tools, costs
+No backend needed                          Thin backend (Hono / Next.js)
+Great for: security, validation, demos     Great for: security, production, compliance, specfic integration
+
+
+The only files that need rewriting in the transition are base44Client.js, AuthContext.jsx, app-params.js, and the three SDK calls inside ChatWindow.jsx. Everything else — the architecture, the protocol, the state design — carries over untouched.
+
+
 ## Stack
 
 `React` · `Vite` · `Tailwind CSS` · `framer-motion` · `shadcn/ui` · `Base44` · `Web Speech API` · frontier reasoning model with built-in web search
