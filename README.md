@@ -8,7 +8,7 @@ The mascot is **Barry**, a bear in a headset and UoM jersey.
 
 ## Problem
 
-Student, Social, Club and Career information is too fragmented, currently spread across the main UoM site, my.unimelb, UMSU, faculty pages, and several event calendars. Finding an answer requires knowing where to look, what it's called, and often resulting in uncessary friction for gaining information thats in the best interest of a student. BarryAI replaces that traversal with one conversation. 
+Student, Social, Club and Career information is too fragmented, currently spread across the main UoM site, my.unimelb, UMSU, faculty pages, and several event calendars. Finding an answer requires knowing where to look, what it's called, resulting in uncessary friction for gaining information thats in the best interest of a student. BarryAI replaces that traversal with one conversation. 
 
 ---
 
