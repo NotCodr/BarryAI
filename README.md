@@ -1,6 +1,6 @@
 # BarryAI
 
-A conversational student assistant for the University of Melbourne. BarryAI sits inside a UoM-branded portal as a single entry point for navigation, clubs, events, enrolment, and support — across English, 简体中文, हिन्दी, and Español.
+A conversational student assistant for potential integration into the University of Melbourne. BarryAI sits inside a UoM-branded portal as a single entry point for navigation, clubs, events, enrolment, and support — across English, 简体中文, हिन्दी, and Español.
 
 The mascot is **Barry**, a bear in a headset and UoM jersey.
 
