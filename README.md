@@ -1,6 +1,6 @@
-# BarryAI
+## BarryAI
 
-A conversational student assistant for potential integration into the University of Melbourne. BarryAI sits inside a UoM-branded portal as a single entry point for navigation, clubs, events, enrolment, and support — across English, 简体中文, हिन्दी, and Español.
+A conversational student assistant for potential integration into the University of Melbourne. BarryAI sits inside a UoM-branded portal as a single entry point for navigation, clubs, events and career opputrinities. With support across English, Mandarin, Hindi and Spanish due to the large proportion of international students.
 
 The mascot is **Barry**, a bear in a headset and UoM jersey.
 
@@ -8,7 +8,21 @@ The mascot is **Barry**, a bear in a headset and UoM jersey.
 
 ## Problem
 
-A new student's information is spread across the main UoM site, my.unimelb, Canvas, UMSU, faculty pages, and several event calendars. Finding an answer requires knowing where to look, what it's called, and often what language it's in. BarryAI replaces that traversal with one conversation.
+Student, Social, Club and Career information is too fragmented, currently spread across the main UoM site, my.unimelb, UMSU, faculty pages, and several event calendars. Finding an answer requires knowing where to look, what it's called, and often resulting in uncessary friction for gaining information thats in the best interest of a student. BarryAI replaces that traversal with one conversation. 
+
+---
+
+## What barry can do
+
+# Key Features
+
+- Dual-Mode Interface: Visitor Mode (Default): General campus info, events, and clubs.
+                       Student Mode (Prototype): Simulates an LMS integration to answer queries about classes, exams, and assignments using a specialized background and prompt set.
+- Multi-Platform UI: Fully mobile-optimised with a hamburger menu and responsive chat window.
+- Multilingual & Voice: Supports English (default), Chinese, Hindi, and Spanish; includes a voice-to-text mic feature.
+- Campus Navigator: Integrated Google Maps for the Parkville campus to help find buildings.
+- Live Info: Connected to UoM, UMSU, and Careers knowledge bases to provide real-time event and club recommendations. This is completley secure as it is only integrating publicly availabe information and doesn't ever integrate personal information.
+
 
 ---
 
