@@ -175,13 +175,18 @@ The Two Stages I like to call:
 
 
         BURST MODE                  AND...         BOUTIQUE MODE
-─────────────────────────────────          ─────────────────────────────────
-Base44 SDK                                 Anthropic API + Vercel AI SDK
-One platform, one bill                     You own every layer
-Ships in hours or days                     Ships in weeks or months
-Limited control over model calls           Full control over prompts, tools, costs
-No backend needed                          Thin backend (Hono / Next.js)
-Great for: security, validation, demos     Great for: security, production, compliance, specfic integration
+
+## Base44 SDK vs. Anthropic API + Vercel AI SDK
+
+|  | Base44 SDK | Anthropic API + Vercel AI SDK |
+|---|---|---|
+| **Platform** | One platform, one bill | You own every layer |
+| **Time to ship** | Hours or days | Weeks or months |
+| **Model control** | Limited control over model calls | Full control over prompts, tools, costs |
+| **Backend** | No backend needed | Thin backend (Hono / Next.js) |
+| **Best for** | Security, validation, demos | Security, production, compliance, specific integration |
+
+The only files that need rewriting in the transition are `base44Client.js`, `AuthContext.jsx`, `app-params.js`, and the three SDK calls inside `ChatWindow.jsx`. Everything else — the architecture, the protocol, the state design — carries over untouched.
 
 
 The only files that need rewriting in the transition are base44Client.js, AuthContext.jsx, app-params.js, and the three SDK calls inside ChatWindow.jsx. Everything else — the architecture, the protocol, the state design — carries over untouched.
