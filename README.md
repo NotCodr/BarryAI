@@ -38,6 +38,26 @@ Student, Social, Club and Career information is too fragmented, currently spread
 Base44 handles auth, websockets, and agent state, so most of the work goes into agent design and UX rather than infrastructure. Live web search keeps event and club data fresh without a hand-curated knowledge base.
 
 ---
+### Scaling / Detaching from Base44
+
+The Two Stages I like to call: 
+
+
+        BURST MODE                  AND...         BOUTIQUE MODE
+
+## Base44 SDK vs. Anthropic API + Vercel AI SDK
+
+|  | Base44 SDK | Anthropic API + Vercel AI SDK |
+|---|---|---|
+| **Platform** | One platform, one bill | You own every layer |
+| **Time to ship** | Hours or days | Weeks or months |
+| **Model control** | Limited control over model calls | Full control over prompts, tools, costs |
+| **Backend** | No backend needed | Thin backend (Hono / Next.js) |
+| **Best for** | Security, validation, demos | Security, production, compliance, specific integration |
+
+The only files that need rewriting in the transition are `base44Client.js`, `AuthContext.jsx`, `app-params.js`, and the three SDK calls inside `ChatWindow.jsx`. Everything else — the architecture, the protocol, the state design — carries over untouched.
+
+---
 
 ## UI & UX
 
@@ -168,29 +188,6 @@ src/
 ```
 
 ---
-
-### Scaling
-
-The Two Stages I like to call: 
-
-
-        BURST MODE                  AND...         BOUTIQUE MODE
-
-## Base44 SDK vs. Anthropic API + Vercel AI SDK
-
-|  | Base44 SDK | Anthropic API + Vercel AI SDK |
-|---|---|---|
-| **Platform** | One platform, one bill | You own every layer |
-| **Time to ship** | Hours or days | Weeks or months |
-| **Model control** | Limited control over model calls | Full control over prompts, tools, costs |
-| **Backend** | No backend needed | Thin backend (Hono / Next.js) |
-| **Best for** | Security, validation, demos | Security, production, compliance, specific integration |
-
-The only files that need rewriting in the transition are `base44Client.js`, `AuthContext.jsx`, `app-params.js`, and the three SDK calls inside `ChatWindow.jsx`. Everything else — the architecture, the protocol, the state design — carries over untouched.
-
-
-The only files that need rewriting in the transition are base44Client.js, AuthContext.jsx, app-params.js, and the three SDK calls inside ChatWindow.jsx. Everything else — the architecture, the protocol, the state design — carries over untouched.
-
 
 ## Stack
 
