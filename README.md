@@ -182,7 +182,7 @@ This approach was taken using The Two Stages I like to call:
 
         BURST MODE                  AND...         BOUTIQUE MODE
 
-## Base44 SDK vs. Anthropic API + Vercel AI SDK
+## Base44 SDK (burst mode) vs. Anthropic API + Vercel AI SDK + Claude API (botique mode)
 
 |  | Base44 SDK | Anthropic API + Vercel AI SDK |
 |---|---|---|
