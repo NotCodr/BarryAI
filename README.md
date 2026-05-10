@@ -124,7 +124,60 @@ src/
 ---
 ### Scaling / Detaching from Base44
 
-The Two Stages I like to call: 
+Browser
+  │
+  ├── React UI (Vite + Tailwind)
+  │     ├── Home.jsx           — appMode state machine (visitor / student / lms)
+  │     ├── ChatWindow.jsx     — conversation lifecycle + SSE stream consumer
+  │     │     ├── ChatHeader.jsx
+  │     │     ├── ChatMessages.jsx
+  │     │     └── ChatInputBar.jsx
+  │     ├── MessageBubble.jsx  — agent→UI token parser ([MAP:...])
+  │     └── portal views       — MyUniMelbDashboard, LMSPage
+  │
+  └── Vercel AI SDK (useChat hook)
+        │
+        ▼
+  ┌────────────────────────────────────────────────────────────┐
+  │  Backend  (Next.js Route Handlers on Vercel)               │
+  │                                                            │
+  │  /api/auth/[...nextauth]   — Auth.js (Google/UoM SSO)      │
+  │  /api/chat                 — POST { messages, userId }     │
+  │       │                                                    │
+  │       └─→ streamText({                                     │
+  │             model: anthropic('claude-sonnet-4-6'),         │
+  │             system: BARRY_SYSTEM_PROMPT,                   │
+  │             tools: { webSearch, getMemory, saveMemory },   │
+  │             messages,                                      │
+  │             maxSteps: 5            ← agentic loop          │
+  │           })                                               │
+  │                                                            │
+  │  Tools (defined in /lib/tools.ts)                          │
+  │   ├── webSearch()      → Tavily / Brave / Serper API       │
+  │   ├── getMemory()      → SELECT … WHERE user_id = ?        │
+  │   └── saveMemory()     → INSERT INTO memories …            │
+  │                                                            │
+  └────────────────────────────────────────────────────────────┘
+                       │
+                       ▼
+  ┌────────────────────────────────────────────────────────────┐
+  │  Data layer                                                │
+  │   ├── Supabase (Postgres)                                  │
+  │   │     ├── users          — auth + profile                │
+  │   │     ├── conversations  — id, user_id, created_at       │
+  │   │     ├── messages       — conversation_id, role, …      │
+  │   │     └── memories       — user_id, content, embedding   │
+  │   │                                                        │
+  │   └── pgvector              — semantic memory retrieval    │
+  └────────────────────────────────────────────────────────────┘
+                       │
+                       ▼
+  ┌────────────────────────────────────────────────────────────┐
+  │  Anthropic API                                             │
+  │   └── claude-sonnet-4-6  (reasoning + tool calling)        │
+  └────────────────────────────────────────────────────────────┘
+
+This approach was taken using The Two Stages I like to call: 
 
 
         BURST MODE                  AND...         BOUTIQUE MODE
@@ -166,16 +219,14 @@ State for the active mode lives in `pages/Home` and is passed into `ChatWindow` 
 
 ### Student mode (LMS prototype)
 - Toggled via a switch at the top of the chat.
-- Simulates an LMS — handles queries like "What are my classes today?" or "When is my Principles of Finance exam?".
+- Simulates an LMS — simulating what it would be like to handle queries like "What are my classes today?" or "When is my Principles of Finance exam?".
 - A full overlay appears on switch with **Skip for now** and **Personalise** options, plus a two-step onboarding prompt.
 - Switching *to* Student inserts a divider in the chat history. Switching *back* to Visitor clears the chat and resets the background.
 - The chat re-skins to a dark navy palette.
 
 ---
 
-## The Agent — `agents/barry_ai.jsonc`
-
-Behaviour is defined declaratively in a single `.jsonc` file, version-controlled and diffable.
+## The Agent — `fully hosed by Base44`
 
 - **Model:** `claude_opus_4_6` — chosen for instruction-following over a long, multi-section system prompt.
 - **Memory:** `enabled: true`, `scope: "both"` (per-user with cross-session sharing where relevant).
@@ -233,5 +284,5 @@ This is a small **agent ↔ UI protocol**: the model emits structured tokens and
 
 ## Portal UI
 
-A faithful UoM-styled shell — disclaimer bar, hero, quick links, student resources, news, acknowledgement of country, footer — plus `MyUniMelbDashboard` for student mode and an `LMSPage`. Components are small and single-responsibility (typically <80 lines).
+A UoM-styled shell — disclaimer bar, hero, quick links, student resources, news, acknowledgement of country, footer — plus `MyUniMelbDashboard` for student mode and an `LMSPage`. Components are small and single-responsibility (typically <80 lines).
 
