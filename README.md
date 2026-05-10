@@ -122,8 +122,9 @@ src/
 
 ---
 ---
-### Scaling / Detaching from Base44
 
+### Scaling / Detaching from Base44
+```
 Browser
   │
   ├── React UI (Vite + Tailwind)
@@ -176,7 +177,7 @@ Browser
   │  Anthropic API                                             │
   │   └── claude-sonnet-4-6  (reasoning + tool calling)        │
   └────────────────────────────────────────────────────────────┘
-
+```
 This approach was taken using The Two Stages I like to call: 
 
 
